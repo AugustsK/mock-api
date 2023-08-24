@@ -1,0 +1,10 @@
+#!/bin/bash
+
+perl -p -i -e "s/\r//g" .env
+export $(grep -v '^#' .env | xargs)
+
+REGISTRY_TAG=${DOCKER_REGISTRY}/${DOCKER_IMAGE}
+
+docker build -t mock-api -f ./Dockerfile .
+docker tag "${DOCKER_IMAGE}" "${REGISTRY_TAG}"
+docker push "${REGISTRY_TAG}"

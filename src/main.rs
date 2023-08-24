@@ -15,7 +15,7 @@ async fn handle_request(req: Request<Body>) -> Result<Response<Body>, Infallible
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
-    let addr = ([0, 0, 0, 0], 8080).into();
+    let addr = ([0, 0, 0, 0], 8000).into();
     let make_svc = make_service_fn(|_conn| async {
         Ok::<_, Infallible>(service_fn(handle_request))
     });

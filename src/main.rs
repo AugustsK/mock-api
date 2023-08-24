@@ -1,5 +1,5 @@
-mod api;
-mod conversion;
+mod route;
+mod util;
 
 use hyper::{Server, Body, Request, Response, StatusCode};
 use hyper::service::{make_service_fn, service_fn};
@@ -7,13 +7,9 @@ use std::convert::Infallible;
 
 async fn handle_request(req: Request<Body>) -> Result<Response<Body>, Infallible> {
     match (req.method(), req.uri().path()) {
-        (&hyper::Method::GET, "/api") => api::handle_request(req).await,
-        _ => {
-            Ok(Response::builder()
-                .status(StatusCode::NOT_FOUND)
-                .body(Body::from("Not Found"))
-                .unwrap())
-        },
+        (&hyper::Method::GET, "/api") => route::api::handle_request(req).await,
+        (&hyper::Method::GET, "/health") => route::health::handle_request(),
+        _ => route::fallback::handle_request(),
     }
 }
 

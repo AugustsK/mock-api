@@ -2,7 +2,7 @@ use hyper::{Body, Request, Response, StatusCode};
 use std::convert::Infallible;
 use serde_derive::{Deserialize, Serialize};
 use tokio::time::{sleep, Duration};
-use crate::conversion::{un_pretty_bytes, un_pretty_time};
+use crate::util::conversion::{un_pretty_bytes, un_pretty_time};
 
 fn default_l() -> String {
     "10KB".to_string()
